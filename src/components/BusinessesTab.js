@@ -11,6 +11,34 @@ export default function BusinessesPage({ tenants, onSelectTenant, onRefresh }) {
   const activeTenants = tenants.filter(t => t.is_active);
   const suspendedTenants = tenants.filter(t => !t.is_active);
 
+  const handleCreate = async (e) => {
+    e.preventDefault();
+    setCreating(true);
+    try {
+      await superAdminApi.createTenant(newTenant);
+      setMsg({ ok: true, text: `"${newTenant.name}" created successfully.` });
+      setNewTenant({ name: "", slug: "" });
+      setShowForm(false);
+      onRefresh?.();
+    } catch(e) { setMsg({ ok: false, text: e.message }); }
+    finally { setCreating(false); }
+  };
+
+  const handleDelete = async (t) => {
+    if (!window.confirm(`Delete "${t.name}"? This will remove all their data permanently.`)) return;
+    try {
+      await superAdminApi.deleteTenant(t.id);
+      onRefresh?.();
+    } catch(e) { alert(e.message); }
+  };
+
+  const handleToggle = async (t) => {
+    try {
+      await superAdminApi.toggleTenant(t.id);
+      onRefresh?.();
+    } catch(e) { alert(e.message); }
+  };
+
   const renderTenantRow = (t) => (
     <div key={t.id} className="sa-tenant-row">
       <div style={{ width: 8, height: 8, borderRadius: '50%', background: t.is_active ? 'var(--green)' : 'var(--red)', flexShrink: 0 }} />
