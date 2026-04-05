@@ -1,4 +1,12 @@
-const BASE = process.env.REACT_APP_API_URL || "http://127.0.0.1:8000/api/v1";
+// Auto-switch between Production and Local
+const isProd = typeof window !== "undefined" && 
+  !window.location.hostname.includes("localhost") && 
+  !window.location.hostname.includes("127.0.0.1");
+
+const PROD_URL = "https://survey-ai-backend-ocjomqzge-bhanutejas-projects-585122ca.vercel.app/api/v1";
+const LOCAL_URL = "http://localhost:8000/api/v1";
+
+const BASE = process.env.REACT_APP_API_URL || (isProd ? PROD_URL : LOCAL_URL);
 
 // ── Auth helpers ──────────────────────────────────────────────────────────
 export function saveAuth(token, user) {
