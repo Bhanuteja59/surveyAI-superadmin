@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import "./App.css";
-import { openStream, clearAuth } from "./api";
+import { openStream, clearAuth, authApi, FE_BASE } from "./api";
 import { Icon } from "./utils/icons";
 import TenantView from "./components/TenantView";
 import AnalyticsPage from "./components/AnalyticsTab";
@@ -24,13 +24,7 @@ export default function App() {
     e.preventDefault();
     setLoginErr("");
     try {
-      const res = await fetch("http://127.0.0.1:8000/api/v1/auth/login", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email: loginEmail, password: loginPassword })
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.detail || "Login failed");
+      const data = await authApi.login(loginEmail, loginPassword);
       if (data.user?.role !== "super_admin") throw new Error("Access denied. Super admin account required.");
       localStorage.setItem("sa_token", data.access_token);
       localStorage.setItem("sa_user", JSON.stringify(data.user));
