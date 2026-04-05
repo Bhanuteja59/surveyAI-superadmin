@@ -1,5 +1,5 @@
 import { useEffect, useState, useCallback } from "react";
-import { superAdminApi } from "../api";
+import { superAdminApi, FE_BASE } from "../api";
 import { Icon } from "../utils/icons";
 
 export default function TenantView({ tenant: initialTenant, goBack }) {
@@ -128,7 +128,7 @@ export default function TenantView({ tenant: initialTenant, goBack }) {
                 <td>
                   <div style={{ fontWeight: 600 }}>{s.title}</div>
                   <a
-                    href={`http://localhost:3000/s/${s.public_token}`}
+                    href={`${FE_BASE}/s/${s.public_token}`}
                     target="_blank"
                     rel="noreferrer"
                     className="sa-badge purple"

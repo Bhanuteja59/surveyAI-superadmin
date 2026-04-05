@@ -8,6 +8,10 @@ const LOCAL_URL = "http://localhost:8000/api/v1";
 
 const BASE = process.env.REACT_APP_API_URL || (isProd ? PROD_URL : LOCAL_URL);
 
+// FE URL from Env with Fallback
+export const FE_BASE = process.env.REACT_APP_FRONTEND_URL || 
+  (isProd ? "https://survey-ai-frontend.vercel.app" : "http://localhost:3000");
+
 // ── Auth helpers ──────────────────────────────────────────────────────────
 export function saveAuth(token, user) {
   localStorage.setItem("sa_token", token);
