@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback, useRef } from "react";
 import "./App.css";
-import { openStream, clearAuth, authApi, FE_BASE } from "./api";
+import { openStream, clearAuth, authApi } from "./api";
 import { Icon } from "./utils/icons";
 import TenantView from "./components/TenantView";
 import AnalyticsPage from "./components/AnalyticsTab";
